@@ -2,6 +2,7 @@
   .profile {
     background-color: plum;
     flex-direction: column;
+    text-align: center;
   }
 
   .profile__info {
@@ -16,7 +17,7 @@
     text-align: center;
   }
   .profile__add-button {
-    margin: 0;
+    margin: 0 auto;
     width: 100%;
   }
 }
