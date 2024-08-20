@@ -1,0 +1,28 @@
+@media screen and (max-width: 620px) {
+  .profile {
+    background-color: plum;
+    flex-direction: column;
+  }
+
+  .profile__info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .profile__description {
+    width: 100%;
+    text-align: center;
+  }
+  .profile__add-button {
+    margin: 0;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 568px) {
+  .gallery__cards {
+    padding: 15px 0 18px;
+  }
+}
