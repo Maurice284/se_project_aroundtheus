@@ -20,5 +20,5 @@ The way you'll do this at work is by exporting images directly from Figma — we
 
 Good luck and have fun!
 
-Project 3 video link:
+**Project 3 video link**
 https://drive.google.com/file/d/1H_QdcbV55uGGWfns1EbFWW4rzV_dCm5e/view?usp=drive_link

@@ -20,10 +20,12 @@
 }
 
 .profile__add-button {
-  background: transparent url(../images/Add\ Button.png) center no-repeat;
+  background: transparent url(../images/add\ button\ symbol.png) center
+    no-repeat;
   width: 150px;
   height: 50px;
   margin-left: auto;
+  border: 2px solid white;
 }
 
 .profile__title {
@@ -49,4 +51,28 @@
   object-fit: cover;
   background-position: center;
   margin-right: 24px;
+}
+
+@media screen and (max-width: 620px) {
+  .profile {
+    background-color: plum;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .profile__info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .profile__description {
+    width: 100%;
+    text-align: center;
+  }
+  .profile__add-button {
+    margin: 0 auto;
+    width: 100%;
+  }
 }
