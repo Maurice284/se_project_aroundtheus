@@ -13,19 +13,19 @@
 }
 
 .profile__edit-button {
-  background: transparent url(../images/small\ pen.png) center no-repeat;
+  background: transparent url(../images/edit-button1.svg) center no-repeat;
   height: 24px;
   width: 24px;
   grid-area: button;
+  border-radius: 1px solid white;
 }
 
 .profile__add-button {
-  background: transparent url(../images/add\ button\ symbol.png) center
-    no-repeat;
+  background: transparent url(../images/add-button1.svg) center no-repeat;
   width: 150px;
   height: 50px;
   margin-left: auto;
-  border: 2px solid white;
+  border-radius: 2px solid white;
 }
 
 .profile__title {
@@ -55,9 +55,14 @@
 
 @media screen and (max-width: 620px) {
   .profile {
-    background-color: plum;
+    background-color: black;
     flex-direction: column;
     text-align: center;
+  }
+
+  .profile__title {
+    font-size: 22px;
+    line-height: 27px;
   }
 
   .profile__info {
@@ -70,6 +75,8 @@
   .profile__description {
     width: 100%;
     text-align: center;
+    font-size: 14px;
+    line-height: 17px;
   }
   .profile__add-button {
     margin: 0 auto;

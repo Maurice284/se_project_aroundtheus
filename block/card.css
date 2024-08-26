@@ -2,13 +2,13 @@
   display: flex;
   flex-direction: column;
   list-style: none;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .card__image {
   width: 282px;
   height: 282px;
-  border-top-left-radius: 2%;
-  border-top-right-radius: 2%;
 }
 
 .card__title {
@@ -31,8 +31,6 @@
   padding-right: 20px;
   align-items: center;
   justify-content: space-between;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
 }
 
 .card__like-button {
