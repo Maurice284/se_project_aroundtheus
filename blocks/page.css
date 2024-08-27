@@ -21,3 +21,14 @@
   -moz-osx-font-smoothing: grayscale;
   padding: 0 20px;
 }
+
+@media screen and (max-width: 620px) {
+  .page {
+  }
+
+  .page__section {
+  }
+
+  .page__section {
+  }
+}

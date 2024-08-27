@@ -18,6 +18,7 @@
   width: 24px;
   grid-area: button;
   border-radius: 1px solid white;
+  cursor: pointer;
 }
 
 .profile__add-button {
@@ -26,6 +27,17 @@
   height: 50px;
   margin-left: auto;
   border-radius: 2px solid white;
+  cursor: pointer;
+}
+
+.profile__edit-button:hover {
+  color: #2f80ed;
+  transition: color 1s ease-in-out;
+}
+
+.profile__add-button:hover {
+  color: #2f80ed;
+  transition: color 1s ease-in-out;
 }
 
 .profile__title {
