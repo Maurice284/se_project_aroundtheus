@@ -29,6 +29,7 @@
   .page__section {
   }
 
-  .page__section {
+  .page__content {
+    padding: 0;
   }
 }
