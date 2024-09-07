@@ -23,6 +23,7 @@
   margin-right: 20px;
   gap: 10px;
   transition: opacity 1s ease-in-out;
+  justify-content: center;
 }
 
 .profile__add-button {
@@ -92,6 +93,8 @@
     color: #fff;
     margin-bottom: 14px;
     gap: 10px;
+    text-overflow: ellipsis;
+    max-width: 196px;
   }
 
   .profile__info {
@@ -116,6 +119,7 @@
     margin-left: 10px;
     height: 18px;
     width: 18px;
+    margin-right: 0px;
   }
 
   .profile__image {
