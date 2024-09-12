@@ -21,6 +21,8 @@
   padding: 36px;
   border-radius: 10px;
   position: relative;
+  width: 430px;
+  box-sizing: border-box;
 }
 
 .modal__close {
@@ -28,20 +30,38 @@
   left: calc(100% + 5px);
   width: 40px;
   height: 40px;
-  background-image: url(../images/Close-button.svg);
+  background: transparent url(../images/Close-button.svg) center no-repeat;
   border: none;
-  background-color: transparent;
-  background: no-repeat;
-  background-size: contain;
   position: absolute;
   cursor: pointer;
 }
 
 .modal__heading {
-  color: black;
+  color: #000000;
+  font-weight: 900;
+  font-size: 24px;
+  list-style: 29px;
+  line-height: 29px;
+  /* padding-top: 34px; */
+  padding-bottom: 273px;
+  /* padding-left: 36px; */
+  padding-right: 64px;
+  margin: 0;
 }
 
 .modal__button {
-  color: black;
+  color: #fff;
   cursor: pointer;
+  background-color: black;
+  font-size: 18px;
+  list-style: 22px;
+  align-items: center;
+  width: 358px;
+  height: 50px;
+  border-radius: 2px;
+}
+
+.modal__form {
+  justify-content: stretch;
+  align-items: center;
 }
