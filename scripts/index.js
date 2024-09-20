@@ -44,7 +44,7 @@ const profileDescriptionInput = document.querySelector(
 );
 
 const profileEditForm = profileEditModal.querySelector(".modal__form");
-const cardisEl = document.querySelector(".card__list");
+const cardList = document.querySelector(".cards__list");
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
 
@@ -84,4 +84,4 @@ function getCardElement(data) {
   return cardElement;
 }
 
-cardList.append(cardElement);
+cardsList.append(cardElement);
