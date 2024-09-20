@@ -84,4 +84,11 @@ function getCardElement(data) {
   return cardElement;
 }
 
-cardsList.append(cardElement);
+// for (let i = 0; i < initialCards.length; i++) {
+//   cardsList.append(getCardElement(initialCards[i]));
+// }
+
+initialCards.forEach((card) => {
+  const newCard = getCardElement(card);
+  cardsList.append(newCard);
+});
