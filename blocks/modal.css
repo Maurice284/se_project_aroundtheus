@@ -87,11 +87,16 @@
   .modal__heading {
     font-size: 18px;
     line-height: 22px;
+    margin-bottom: 75px;
+    margin-top: 0;
   }
 
   .modal__close {
     width: 26px;
     height: 26px;
+    top: -45px;
+    right: 0;
+    left: unset;
   }
 
   .modal__container {
@@ -100,5 +105,9 @@
 
   .modal__button {
     width: 100%;
+  }
+
+  .modal__container {
+    padding: 25px 22px;
   }
 }
