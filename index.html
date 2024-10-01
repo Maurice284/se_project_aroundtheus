@@ -73,7 +73,11 @@
     <!--Add card modal-->
     <div class="modal" id="profile-add-modal">
       <div class="modal__container">
-        <button class="modal__close" id="add-modal-close-button"></button>
+        <button
+          type="button"
+          class="modal__close"
+          id="add-modal-close-button"
+        ></button>
         <p class="modal__heading">New place</p>
         <form class="modal__form" id="modal-add-form">
           <input
@@ -81,16 +85,16 @@
             name="title"
             placeholder="Title"
             class="modal__input modal_input_type_title"
-            id="profile-edit-name-input"
+            id="add-card-title-input"
           />
           <input
             type="text"
             name="description"
             placeholder="Image URL"
             class="modal__input modal_input_type_url"
-            id="profile-edit-description-input"
+            id="add-card-url-input"
           />
-          <button class="modal__button">Save</button>
+          <button type="submit" class="modal__button">Save</button>
         </form>
       </div>
     </div>
