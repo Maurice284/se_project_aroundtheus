@@ -65,6 +65,8 @@ const cardsList = document.querySelector(".cards__list");
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
 
+const cardLikeButton = document.querySelector("#card-like-button");
+
 /* -------------------------------------------------------------------------- */
 /*                                  Functions                                 */
 /* -------------------------------------------------------------------------- */
@@ -103,6 +105,11 @@ function getCardElement(data) {
   cardImageEl.alt = data.name;
   cardTitleEl.textContent = data.name;
   return cardElement;
+}
+
+function togglelike(button) {
+  const heart = button.querySelector("#card-like-button");
+  heart.classList.toggle("liked");
 }
 
 /* -------------------------------------------------------------------------- */
