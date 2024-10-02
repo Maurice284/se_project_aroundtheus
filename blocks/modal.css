@@ -23,6 +23,15 @@
   position: relative;
   width: 430px;
   box-sizing: border-box;
+  /*width: 433px;
+  height: 540px;
+  position: fixed;
+  z-index: 1000;*/
+}
+
+.modal__preview-container {
+  margin: auto;
+  position: relative;
 }
 
 .modal__close {
@@ -81,6 +90,12 @@
   padding-bottom: 14px;
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.modal__image-preview {
+  width: 433px;
+  height: 540px;
+  background: none;
 }
 
 @media screen and (max-width: 620px) {
