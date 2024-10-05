@@ -102,11 +102,10 @@ function handleProfileEditSubmit(e) {
 
 function handleAddCardSubmit(e) {
   e.preventDefault();
-  const cardElement = getCardElement({
+  renderCard({
     name: addCardTitleInput.value,
     link: addCardUrlInput.value,
   });
-  cardsList.prepend(cardElement);
   closePopup(addCardModal);
   e.target.reset();
 }
