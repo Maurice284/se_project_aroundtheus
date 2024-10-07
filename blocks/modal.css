@@ -97,8 +97,8 @@
 }
 
 .modal__image-preview {
-  width: 433px;
-  height: 540px;
+  max-width: 75vw;
+  max-height: 75vh;
   background: none;
 }
 
