@@ -52,20 +52,27 @@
         <button class="modal__close" id="profile-modal-close-button"></button>
         <p class="modal__heading">Edit Profile</p>
         <form class="modal__form" name="profile-form">
-          <input
-            type="text"
-            name="title"
-            placeholder="Your name"
-            class="modal__input"
-            id="profile-edit-name-input"
-          />
-          <input
-            type="text"
-            name="description"
-            placeholder="Your job"
-            class="modal__input"
-            id="profile-edit-description-input"
-          />
+          <label for="modal__label">
+            <input
+              type="text"
+              name="title"
+              placeholder="Your name"
+              class="modal__input"
+              id="profile-edit-name-input"
+            />
+            <input
+              type="text"
+              name="description"
+              placeholder="Your job"
+              class="modal__input"
+              id="profile-edit-description-input"
+            />
+            <span
+              class="modal__error"
+              id="profile-edit-description-input-error"
+            ></span>
+          </label>
+
           <button class="modal__button">Save</button>
         </form>
       </div>
@@ -104,7 +111,7 @@
               minlength="2"
               required
             />
-            <span class="modal__error"></span>
+            <span class="modal__error" id="add-card-url-input-error"></span>
           </label>
           <button type="submit" class="modal__button">Save</button>
         </form>
