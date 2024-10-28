@@ -36,6 +36,8 @@ function toggleButtonState(inputEls, submitButton, { inactiveButtonClass }) {
   if (hasInvalidInput(inputEls)) {
     submitButton.classList.add(inactiveButtonClass);
     submitButton.disabled = true;
+    //Add a modifier class to the buttonEl to make it grey
+    //Don't forget the CSS
     return;
   }
 

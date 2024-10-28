@@ -76,6 +76,11 @@
   /* border-style: hidden; */
 }
 
+/*.inactive-button {
+  color: grey;
+  cursor: not-allowed;
+}*/
+
 .modal__form {
   /* justify-content: stretch;
   align-items: center; */
@@ -102,6 +107,12 @@
   color: #ff0000;
 }
 
+.modal__button_disabled {
+  color: black;
+  background-color: #fff;
+  opacity: 0.2;
+  border: black solid 1px;
+}
 /*.modal__input:invalid {
   line-height: 15px;
   font-size: 12px;

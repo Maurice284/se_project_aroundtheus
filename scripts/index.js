@@ -82,11 +82,40 @@ const closeButtons = document.querySelectorAll(".modal__close");
 /* -------------------------------------------------------------------------- */
 function closePopup(modal) {
   modal.classList.remove("modal_opened");
+  // remove Escape key event listener
+  document.removeEventListener("keydown", handleEscape);
 }
 
 function openPopup(modal) {
   modal.classList.add("modal_opened");
+  document.addEventListener("keydown", handleEscape);
+  // add the  Escape key event listener
 }
+function handleEscape(event) {
+  const currentModal = document.querySelector(".modal_opened");
+  if (event.key === "Escape") {
+    closePopup(currentModal); // call the function to close the modal
+  }
+}
+
+document.querySelectorAll(".modal").forEach((modal) => {
+  modal.addEventListener("mousedown", (evt) => {
+    // if evt.target's classList contains "modal"
+    if (evt.target.classList.contains("modal")) {
+      closePopup(modal);
+    }
+  });
+});
+// select list of all modals
+// iterate through it
+// set event listener on each modal
+// mousedown listener to close modal when it is clicked
+
+//document.getElementById("overlay").addEventListener("click", closePopup);
+//document.getElementById("openPopup").addEventListener("click", showPopup);
+
+// Lookup adding and removing an event listener
+
 //const CardTitleInput = addCardFormElement.querySelector(
 //".profile-edit-name-input"
 //);
@@ -141,6 +170,10 @@ function getCardElement(data) {
   cardTitleEl.textContent = data.name;
   return cardElement;
 }
+// Handle key presses
+//document.addEventListener(keydown, function (event) {
+// if (event.key === "Escape")
+//}
 
 //function togglelike(button) {
 //const heart = button.querySelector("#card-like-button");
