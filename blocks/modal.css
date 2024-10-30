@@ -55,11 +55,11 @@
   font-size: 24px;
   list-style: 29px;
   line-height: 29px;
-  /* margin-bottom: 54px; */
   gap: 54px;
   /*padding-right: 28px;
   padding-right: 64px; */
-  /* margin: 0; */
+  margin: 0;
+  margin-bottom: 54px;
 }
 
 .modal__button {
@@ -93,12 +93,24 @@
   color: #000000;
 }
 
+.modal__label {
+  position: relative;
+}
+
 .modal__input {
   font-size: 14px;
   line-height: 17px;
   padding-bottom: 14px;
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.modal__error {
+  position: absolute;
+  left: 0;
+  top: calc(100%);
 }
 
 .modal__error_visible {

@@ -59,20 +59,31 @@
               placeholder="Your name"
               class="modal__input"
               id="profile-edit-name-input"
+              minlength="2"
+              maxlength="40"
+              required
             />
+            <span
+              class="modal__error"
+              id="profile-edit-name-input-error"
+            ></span>
+          </label>
+          <label class="modal__label">
             <input
               type="text"
               name="description"
               placeholder="Your job"
               class="modal__input"
               id="profile-edit-description-input"
+              minlength="2"
+              maxlength="200"
+              required
             />
             <span
               class="modal__error"
               id="profile-edit-description-input-error"
             ></span>
           </label>
-
           <button class="modal__button">Save</button>
         </form>
       </div>
@@ -94,21 +105,19 @@
               placeholder="Title"
               class="modal__input"
               id="add-card-title-input"
-              maxlength="40"
-              minlength="2"
+              maxlength="30"
+              minlength="1"
               required
             />
             <span class="modal__error" id="add-card-title-input-error"></span>
           </label>
           <label class="modal__label">
             <input
-              type="text"
+              type="url"
               name="description"
               placeholder="Image URL"
               class="modal__input"
               id="add-card-url-input"
-              maxlength="200"
-              minlength="2"
               required
             />
             <span class="modal__error" id="add-card-url-input-error"></span>
