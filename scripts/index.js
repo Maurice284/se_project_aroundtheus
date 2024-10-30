@@ -92,8 +92,8 @@ function openPopup(modal) {
   // add the  Escape key event listener
 }
 function handleEscape(event) {
-  const currentModal = document.querySelector(".modal_opened");
   if (event.key === "Escape") {
+    const currentModal = document.querySelector(".modal_opened");
     closePopup(currentModal); // call the function to close the modal
   }
 }
