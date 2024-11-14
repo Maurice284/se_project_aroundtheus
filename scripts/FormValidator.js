@@ -16,7 +16,7 @@ class FormValidator {
     errorMessageEl.classList.add(options.errorClass);
   }
 
-  _toggleButtonState(inputEls, submitButton, { inactiveButtonClass }) {
+  _toggleButtonState(inputEls, submitButton) {
     if (hasInvalidInput(inputEls)) {
       submitButton.classList.add(inactiveButtonClass);
       submitButton.disabled = true;
@@ -32,17 +32,15 @@ class FormValidator {
   _checkInputValidity() {}
 
   _setEventListners() {
-    const { inputSelector } = options;
     const inputEls = [...this._form.querySelectorAll(this._inputSelector)];
-    const submitButton = this._form.querySelector(
-      this._options.submitButtonSelector
-    );
-    toggleButtonState(inputEls, submitButton, options);
+    const submitButton = this._form.querySelector(this._submitButtonSelector);
+
+    this._toggleButtonState(inputEls, submitButton);
 
     inputEls.forEach((inputEl) => {
       inputEl.addEventListener("input", (e) => {
-        checkInputValidity(this._form, inputEl, options);
-        toggleButtonState(inputEls, submitButton, options);
+        this._checkInputValidity(this._form, inputEl);
+        this._toggleButtonState(inputEls, submitButton);
       });
     });
   }
