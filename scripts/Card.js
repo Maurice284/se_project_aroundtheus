@@ -32,15 +32,29 @@ export default class Card {
       .ClassList.toggle("card__like-button_is-active");
   }
 
-  getView() {
+  getCardElement() {
     this._cardElement = document
       .querySelector(this._cardSelector)
       .content.querySelector(".card")
       .cloneNode(true);
 
-    // get the card view
+    //select the image element within cardElement
+    //seelect the title element withtin cardElement
+
+    //set the src of the image element to be the link of the card
+
+    //set the text content of the title element to be the name of the card
+
     // set event listners
+
+    this._cardImageEl = this._cardElement.querySelector(".card__image");
+    this._cardTitleEl = this._cardElement.querySelector(".card__title");
+    this._cardImageEl.src = this._link;
+    this._cardImageEl.alt = this._name;
+    this._cardTitleEl.textContent = this._name;
+
     this._setEventListeners();
+    return this._cardElement;
     //return the card
   }
 }

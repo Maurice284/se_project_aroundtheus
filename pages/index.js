@@ -1,4 +1,5 @@
-//import Card from "./scripts/index.js";
+import Card from "../scripts/Card.js";
+import FormValidator from "../scripts/FormValidator.js";
 
 const initialCards = [
   {
@@ -32,6 +33,15 @@ const initialCards = [
   },
 ];
 
+const config = {
+  formSelector: ".modal__form",
+  inputSelector: ".modal__input",
+  submitButtonSelector: ".modal__button",
+  inactiveButtonClass: "modal__button_disabled",
+  inputErrorClass: "modal__input_type_error",
+  errorClass: "modal__error_visible",
+};
+
 console.log(initialCards);
 
 const cardData = {
@@ -40,7 +50,7 @@ const cardData = {
 };
 
 const card = new Card(cardData, "#card-template");
-card.testMethod();
+//card.testMethod();
 
 // const data = {
 //   name: "Lake Louise",
@@ -84,6 +94,8 @@ const imagePreviewCaption = document.querySelector(".modal__caption");
   "#modal-image-preview-button"
 );*/
 const closeButtons = document.querySelectorAll(".modal__close");
+
+const cardSelector = "#card-template";
 
 //const cardLikeButton = document.querySelector("#card-like-button");
 
@@ -246,3 +258,6 @@ initialCards.forEach((card) => {
   // cardsList.append(newCard);
   renderCard(card, "append");
 });
+
+const editFormValidator = new FormValidator(config, profileEditForm);
+editFormValidator.enableValidation();
