@@ -5,7 +5,7 @@ class FormValidator {
     this._inactiveButtonClass = settings.inactiveButtonClass;
     this._inputErrorClass = settings.inputErrorClass;
     this._errorClass = settings.errorClass;
-
+    // this._inputList = [...formEl.querySelectorAll(settings.inputSelector)]
     this._form = formEl;
   }
 
@@ -16,31 +16,42 @@ class FormValidator {
     errorMessageEl.classList.add(options.errorClass);
   }
 
-  _toggleButtonState(inputEls, submitButton) {
-    if (hasInvalidInput(inputEls)) {
-      submitButton.classList.add(inactiveButtonClass);
-      submitButton.disabled = true;
+  _toggleButtonState() {
+    // this has inputValues can use the this._inputEls list, you dont need to pass any arguments
+    // and you should use this._hasInvalidInput
+    if (this._hasInvalidInput()) {
+      // use this.submitButton instead of subitButton
+      this._submitButton.classList.add(this._inactiveButtonClass);
+      this._submitButton.disabled = true;
 
       return;
     }
-    submitButton.classList.remove(inactiveButtonClass);
-    submitButton.disabled = false;
+    this._submitButton.classList.remove(this._inactiveButtonClass);
+    this._submitButton.disabled = false;
   }
 
-  _hasInvalidInput() {}
+  _hasInvalidInput() {
+    return !this._inputEls.every((inputEl) => inputEl.validity.valid);
+  }
 
-  _checkInputValidity() {}
+  _checkInputValidity() {
+    // you need to use the hasInvalidIput function to check each input to see if they are valid
+    // if they are not valid then call the this._showInputError
+    // if they are call the this._hideInputError method
+  }
 
   _setEventListners() {
-    const inputEls = [...this._form.querySelectorAll(this._inputSelector)];
-    const submitButton = this._form.querySelector(this._submitButtonSelector);
+    this._inputEls = [...this._form.querySelectorAll(this._inputSelector)];
+    this._submitButton = this._form.querySelector(this._submitButtonSelector);
 
-    this._toggleButtonState(inputEls, submitButton);
+    this._toggleButtonState();
 
-    inputEls.forEach((inputEl) => {
+    this._submitButton = this._form.querySelector(this._submitButtonSelector);
+
+    this._inputEls.forEach((inputEl) => {
       inputEl.addEventListener("input", (e) => {
-        this._checkInputValidity(this._form, inputEl);
-        this._toggleButtonState(inputEls, submitButton);
+        this._checkInputValidity(inputEl);
+        this._toggleButtonState();
       });
     });
   }

@@ -9,14 +9,14 @@ export default class Card {
     //".card__like-button"
     this._cardElement
       .querySelector(".card__like-button")
-      .addEventListner("Click", () => {
+      .addEventListener("click", () => {
         this._handleLikeIcon();
       });
 
     //".card__delete-button"
     this._cardElement
       .querySelector(".card__delete-button")
-      .addEventListner("Click", () => {
+      .addEventListener("click", () => {
         this._handleDeleteCard();
       });
   }

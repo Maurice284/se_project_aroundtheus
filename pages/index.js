@@ -161,37 +161,37 @@ function handleAddCardSubmit(e) {
   e.target.reset();
 }
 
-function getCardElement(data) {
-  const cardElement = cardTemplate.cloneNode(true);
-  const cardImageEl = cardElement.querySelector(".card__image");
-  const cardTitleEl = cardElement.querySelector(".card__title");
+// function getCardElement(data) {
+//   const cardElement = cardTemplate.cloneNode(true);
+//   const cardImageEl = cardElement.querySelector(".card__image");
+//   const cardTitleEl = cardElement.querySelector(".card__title");
 
-  cardImageEl.addEventListener("click", () => {
-    // 1. set image src
-    // 2. set image alt text
-    // 3. set caption text
-    // open modal
-    imagePreviewCaption.textContent = data.name;
-    imagePreviewImgEl.src = data.link;
-    imagePreviewImgEl.alt = data.name;
-    // imagePreviewModal.classList.add("modal_opened");
-    openPopup(imagePreviewModal);
-  });
+//   cardImageEl.addEventListener("click", () => {
+//     // 1. set image src
+//     // 2. set image alt text
+//     // 3. set caption text
+//     // open modal
+//     imagePreviewCaption.textContent = data.name;
+//     imagePreviewImgEl.src = data.link;
+//     imagePreviewImgEl.alt = data.name;
+//     // imagePreviewModal.classList.add("modal_opened");
+//     openPopup(imagePreviewModal);
+//   });
 
-  const likeButton = cardElement.querySelector(".card__like-button");
-  likeButton.addEventListener("click", () => {
-    //toggle a class on and off the like button
-    likeButton.classList.toggle("card__like-button_liked");
-  });
-  const cardDeleteButton = cardElement.querySelector(".card__delete-button");
-  cardDeleteButton.addEventListener("click", () => {
-    cardElement.remove();
-  });
-  cardImageEl.src = data.link;
-  cardImageEl.alt = data.name;
-  cardTitleEl.textContent = data.name;
-  return cardElement;
-}
+//   const likeButton = cardElement.querySelector(".card__like-button");
+//   likeButton.addEventListener("click", () => {
+//     //toggle a class on and off the like button
+//     likeButton.classList.toggle("card__like-button_liked");
+//   });
+//   const cardDeleteButton = cardElement.querySelector(".card__delete-button");
+//   cardDeleteButton.addEventListener("click", () => {
+//     cardElement.remove();
+//   });
+//   cardImageEl.src = data.link;
+//   cardImageEl.alt = data.name;
+//   cardTitleEl.textContent = data.name;
+//   return cardElement;
+// }
 // Handle key presses
 //document.addEventListener(keydown, function (event) {
 // if (event.key === "Escape")
@@ -248,15 +248,21 @@ addCardForm.addEventListener("submit", handleAddCardSubmit);
 /*                               Initialization                               */
 /* -------------------------------------------------------------------------- */
 
-function renderCard(item, method = "prepend") {
-  const cardElement = getCardElement(item);
-  cardsList[method](cardElement);
+function renderCard(cardEl) {
+  const cardElement = cardEl.getCardElement();
+  cardsList.append(cardElement);
 }
 
-initialCards.forEach((card) => {
-  // const newCard = getCardElement(card);
-  // cardsList.append(newCard);
-  renderCard(card, "append");
+// the old way
+// initialCards.forEach((card) => {
+//   // const newCard = getCardElement(card);
+//   // cardsList.append(newCard);
+//   renderCard(card, "append");
+// });
+
+initialCards.forEach((cardData) => {
+  const card = new Card(cardData, "#card-template");
+  renderCard(card);
 });
 
 const editFormValidator = new FormValidator(config, profileEditForm);
