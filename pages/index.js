@@ -49,7 +49,7 @@ const cardData = {
   link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
 };
 
-const card = new Card(cardData, "#card-template");
+//const card = new Card(cardData, "#card-template");
 //card.testMethod();
 
 // const data = {
@@ -149,6 +149,12 @@ function handleProfileEditSubmit(e) {
   profileTitle.textContent = profileTitleInput.value;
   profileDescription.textContent = profileDescriptionInput.value;
   closePopup(profileEditModal);
+}
+
+function handleCardImageClick(name, link) {
+  imagePreviewImgEl.src = link;
+
+  openPopup(imagePreviewModal);
 }
 
 function handleAddCardSubmit(e) {
@@ -261,7 +267,7 @@ function renderCard(cardEl) {
 // });
 
 initialCards.forEach((cardData) => {
-  const card = new Card(cardData, "#card-template");
+  const card = new Card(cardData, "#card-template", handleCardImageClick);
   renderCard(card);
 });
 
