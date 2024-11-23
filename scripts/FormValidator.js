@@ -38,6 +38,11 @@ class FormValidator {
     // you need to use the hasInvalidIput function to check each input to see if they are valid
     // if they are not valid then call the this._showInputError
     // if they are call the this._hideInputError method
+    if (this._hasInvalidInput) {
+      // use the showInputError
+    } else {
+      // hide the input error
+    }
   }
 
   _setEventListners() {
