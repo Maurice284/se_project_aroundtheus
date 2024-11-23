@@ -159,7 +159,8 @@ function handleCardImageClick(name, link) {
 
 function handleAddCardSubmit(e) {
   e.preventDefault();
-  renderCard({
+  //renderCard();
+  createCard({
     name: addCardTitleInput.value,
     link: addCardUrlInput.value,
   });
@@ -259,6 +260,10 @@ function renderCard(cardEl) {
   cardsList.append(cardElement);
 }
 
+function createCard(cardData) {
+  const card = new Card(cardData, "#card-template", handleCardImageClick);
+  renderCard(card);
+}
 // the old way
 // initialCards.forEach((card) => {
 //   // const newCard = getCardElement(card);
@@ -266,10 +271,12 @@ function renderCard(cardEl) {
 //   renderCard(card, "append");
 // });
 
-initialCards.forEach((cardData) => {
-  const card = new Card(cardData, "#card-template", handleCardImageClick);
-  renderCard(card);
-});
+//initialCards.forEach((cardData) => {
+//  const card = new Card(cardData, "#card-template", handleCardImageClick);
+//  renderCard(card);
+//});
+
+initialCards.forEach((cardData) => createCard(cardData));
 
 const editFormValidator = new FormValidator(config, profileEditForm);
 editFormValidator.enableValidation();
