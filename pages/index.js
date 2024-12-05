@@ -153,6 +153,10 @@ function handleProfileEditSubmit(e) {
 
 function handleCardImageClick(name, link) {
   imagePreviewImgEl.src = link;
+  imagePreviewImgEl.src = name;
+
+  // put the caption under the image
+  imagePreviewCaption.textContent = name;
 
   openPopup(imagePreviewModal);
 }
