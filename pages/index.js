@@ -153,7 +153,7 @@ function handleProfileEditSubmit(e) {
 
 function handleCardImageClick(name, link) {
   imagePreviewImgEl.src = link;
-  imagePreviewImgEl.src = name;
+  imagePreviewImgEl.alt = name;
 
   // put the caption under the image
   imagePreviewCaption.textContent = name;
@@ -261,7 +261,7 @@ addCardForm.addEventListener("submit", handleAddCardSubmit);
 
 function renderCard(cardEl) {
   const cardElement = cardEl.getCardElement();
-  cardsList.append(cardElement);
+  cardsList.prepend(cardElement);
 }
 
 function createCard(cardData) {
@@ -284,3 +284,6 @@ initialCards.forEach((cardData) => createCard(cardData));
 
 const editFormValidator = new FormValidator(config, profileEditForm);
 editFormValidator.enableValidation();
+
+const addCardFormValidator = new FormValidator(config, addCardForm);
+addCardFormValidator.enableValidation();

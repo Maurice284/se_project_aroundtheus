@@ -10,10 +10,10 @@ class FormValidator {
   }
 
   _ShowInputError(inputEl) {
-    const errorMessageEl = formEl.querySelector(`#${inputEl.id}-error`);
-    inputEl.classList.add(options.inputErrorClass);
+    const errorMessageEl = this._form.querySelector(`#${inputEl.id}-error`);
+    inputEl.classList.add(this._inputErrorClass);
     errorMessageEl.textContent = inputEl.validationMessage;
-    errorMessageEl.classList.add(options.errorClass);
+    errorMessageEl.classList.add(this._errorClass);
   }
 
   _toggleButtonState() {
@@ -34,11 +34,12 @@ class FormValidator {
     return !this._inputEls.every((inputEl) => inputEl.validity.valid);
   }
 
-  _checkInputValidity() {
+  _checkInputValidity(inputEl) {
     // you need to use the hasInvalidIput function to check each input to see if they are valid
     // if they are not valid then call the this._showInputError
     // if they are call the this._hideInputError method
     if (this._hasInvalidInput) {
+      this._ShowInputError(inputEl);
       // use the showInputError
     } else {
       // hide the input error
