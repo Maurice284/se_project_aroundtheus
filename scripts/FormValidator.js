@@ -9,7 +9,7 @@ class FormValidator {
     this._form = formEl;
   }
 
-  _ShowInputError(inputEl) {
+  _showInputError(inputEl) {
     const errorMessageEl = this._form.querySelector(`#${inputEl.id}-error`);
     inputEl.classList.add(this._inputErrorClass);
     errorMessageEl.textContent = inputEl.validationMessage;
@@ -20,14 +20,18 @@ class FormValidator {
     // this has inputValues can use the this._inputEls list, you dont need to pass any arguments
     // and you should use this._hasInvalidInput
     if (this._hasInvalidInput()) {
+      this.disableSubmitButton();
       // use this.submitButton instead of subitButton
-      this._submitButton.classList.add(this._inactiveButtonClass);
-      this._submitButton.disabled = true;
 
       return;
     }
     this._submitButton.classList.remove(this._inactiveButtonClass);
     this._submitButton.disabled = false;
+  }
+
+  disableSubmitButton() {
+    this._submitButton.classList.add(this._inactiveButtonClass);
+    this._submitButton.disabled = true;
   }
 
   _hasInvalidInput() {
@@ -39,7 +43,7 @@ class FormValidator {
     // if they are not valid then call the this._showInputError
     // if they are call the this._hideInputError method
     if (this._hasInvalidInput) {
-      this._ShowInputError(inputEl);
+      this._showInputError(inputEl);
       // use the showInputError
     } else {
       // hide the input error
@@ -51,8 +55,6 @@ class FormValidator {
     this._submitButton = this._form.querySelector(this._submitButtonSelector);
 
     this._toggleButtonState();
-
-    this._submitButton = this._form.querySelector(this._submitButtonSelector);
 
     this._inputEls.forEach((inputEl) => {
       inputEl.addEventListener("input", (e) => {
