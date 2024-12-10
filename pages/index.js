@@ -1,4 +1,4 @@
-import Card from "../scripts/Card.js";
+import Card from "./components/Card.js";
 import FormValidator from "../scripts/FormValidator.js";
 
 const initialCards = [
