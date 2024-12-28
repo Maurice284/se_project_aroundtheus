@@ -1,6 +1,9 @@
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
-import "../pages/index.css";
+import PopupWithImage from "../components/PopupWithImage.js";
+import Section from "../components/Section.js";
+import "./index.css";
+import UserInfo from "../components/UserInfo.js";
 
 const initialCards = [
   {
@@ -44,6 +47,8 @@ const config = {
 };
 
 console.log(initialCards);
+const cardPreview = new PopupWithImage("#image-preview-modal");
+cardPreview.setEventListeners();
 
 /* -------------------------------------------------------------------------- */
 /*                                  Elements                                  */
@@ -85,6 +90,11 @@ const cardSelector = "#card-template";
 
 //const cardLikeButton = document.querySelector("#card-like-button");
 
+const userInfo = new UserInfo({
+  nameSelector: ".profile__title",
+  jobSelector: ".profile__description",
+});
+
 /* -------------------------------------------------------------------------- */
 /*                                  Functions                                 */
 /* -------------------------------------------------------------------------- */
@@ -108,6 +118,7 @@ function handleEscape(event) {
 
 document.querySelectorAll(".modal").forEach((modal) => {
   modal.addEventListener("mousedown", (evt) => {
+    console.log(evt.target);
     // if evt.target's classList contains "modal"
     if (evt.target.classList.contains("modal")) {
       closePopup(modal);
@@ -117,19 +128,18 @@ document.querySelectorAll(".modal").forEach((modal) => {
 
 function handleProfileEditSubmit(e) {
   e.preventDefault();
+  // Instead of these two lines of code below
   profileTitle.textContent = profileTitleInput.value;
   profileDescription.textContent = profileDescriptionInput.value;
+
+  userInfo.setUserInfo({ name: newName, job: newJob });
+  // ... call setUserInfo method, passing it argument
+  // arg:  { name: ..., job: ... }
   closePopup(profileEditModal);
 }
 
 function handleCardImageClick(name, link) {
-  imagePreviewImgEl.src = link;
-  imagePreviewImgEl.alt = name;
-
-  // put the caption under the image
-  imagePreviewCaption.textContent = name;
-
-  openPopup(imagePreviewModal);
+  cardPreview.open(name, link);
 }
 
 function handleAddCardSubmit(e) {
@@ -149,8 +159,10 @@ function handleAddCardSubmit(e) {
 /*                               Event Listeners                              */
 /* -------------------------------------------------------------------------- */
 profileEditButton.addEventListener("click", () => {
-  profileTitleInput.value = profileTitle.textContent;
-  profileDescriptionInput.value = profileDescription.textContent;
+  // Call userInfo.getUserInfo, assign return value to a variable
+  const profileInfo = userInfo.getUserInfo(); // profileInfo.name = "Jacques Cousteau"
+  profileTitleInput.value = profileInfo.name; // use the object's properties instead of getting text content directly
+  profileDescriptionInput.value = profileInfo.job;
   //profileEditModal.classList.add("modal_opened");
   openPopup(profileEditModal);
 });
@@ -187,10 +199,33 @@ function createCard(cardData) {
   return cardElement;
 }
 
-initialCards.forEach((cardData) => renderCard(cardData));
+// initialCards.forEach((cardData) => renderCard(cardData));
 
 const editFormValidator = new FormValidator(config, profileEditForm);
 editFormValidator.enableValidation();
 
 const addCardFormValidator = new FormValidator(config, addCardForm);
 addCardFormValidator.enableValidation();
+
+const cardSection = new Section(
+  {
+    items: initialCards,
+    renderer: (data) => {
+      cardSection.addItem(createCard(data));
+    },
+  },
+  ".cards__list"
+);
+
+cardSection.renderItems();
+
+// const chatSection = new Section(
+//   {
+//     items: [{ message: "hello" }, { message: "how are you" }],
+//     renderer: (data) => {
+//       // create html element based on message
+//       // place that element on the page
+//     },
+//   },
+//   ".chat-section"
+// );
