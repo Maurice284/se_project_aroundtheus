@@ -10,15 +10,15 @@ class UserInfo {
   // Use this when opening the profile modal
   getUserInfo() {
     return {
-      name: this.nameElement.textContent, // Get the name from the element
+      userName: this.nameElement.textContent, // Get the name from the element
       job: this.jobElement.textContent, // Get the job from the element
     };
   }
 
   // Method to set new user information when the form is submitted
-  setUserInfo({ name, job }) {
+  setUserInfo(userName, job) {
     // Update the text content of the elements
-    this.nameElement.textContent = name;
+    this.nameElement.textContent = userName;
     this.jobElement.textContent = job;
   }
 }

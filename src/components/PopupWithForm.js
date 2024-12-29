@@ -17,3 +17,5 @@ const newCardPopup = new PopupWithForm("#profile-add-modal", () => {});
 newCardPopup.open();
 
 newCardPopup.close();
+
+export default PopupWithForm;

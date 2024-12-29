@@ -131,8 +131,10 @@ function handleProfileEditSubmit(e) {
   // Instead of these two lines of code below
   profileTitle.textContent = profileTitleInput.value;
   profileDescription.textContent = profileDescriptionInput.value;
+  const userName = profileTitleInput.value;
+  const job = profileDescriptionInput.value;
 
-  userInfo.setUserInfo({ name: newName, job: newJob });
+  userInfo.setUserInfo(userName, job);
   // ... call setUserInfo method, passing it argument
   // arg:  { name: ..., job: ... }
   closePopup(profileEditModal);
@@ -161,7 +163,7 @@ function handleAddCardSubmit(e) {
 profileEditButton.addEventListener("click", () => {
   // Call userInfo.getUserInfo, assign return value to a variable
   const profileInfo = userInfo.getUserInfo(); // profileInfo.name = "Jacques Cousteau"
-  profileTitleInput.value = profileInfo.name; // use the object's properties instead of getting text content directly
+  profileTitleInput.value = profileInfo.userName; // use the object's properties instead of getting text content directly
   profileDescriptionInput.value = profileInfo.job;
   //profileEditModal.classList.add("modal_opened");
   openPopup(profileEditModal);
