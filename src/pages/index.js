@@ -4,6 +4,7 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import Section from "../components/Section.js";
 import "./index.css";
 import UserInfo from "../components/UserInfo.js";
+import PopupWithForm from "../components/PopupWithForm.js";
 
 const initialCards = [
   {
@@ -47,7 +48,9 @@ const config = {
 };
 
 console.log(initialCards);
-const cardPreview = new PopupWithImage("#image-preview-modal");
+const cardPreview = new PopupWithImage({
+  popupSelector: "#image-preview-modal",
+});
 cardPreview.setEventListeners();
 
 /* -------------------------------------------------------------------------- */
@@ -75,18 +78,18 @@ const addCardModal = document.querySelector("#profile-add-modal");
 
 const profileEditForm = document.forms["profile-form"];
 const cardsList = document.querySelector(".cards__list");
-const cardTemplate =
-  document.querySelector("#card-template").content.firstElementChild;
+// const cardTemplate =
+//   document.querySelector("#card-template").content.firstElementChild;
 
-const imagePreviewModal = document.querySelector("#image-preview-modal");
-const imagePreviewImgEl = document.querySelector(".modal__image-preview");
-const imagePreviewCaption = document.querySelector(".modal__caption");
+// const imagePreviewModal = document.querySelector("#image-preview-modal");
+// const imagePreviewImgEl = document.querySelector(".modal__image-preview");
+// const imagePreviewCaption = document.querySelector(".modal__caption");
 /*const imagePreviewCloseButton = document.querySelector(
   "#modal-image-preview-button"
 );*/
 const closeButtons = document.querySelectorAll(".modal__close");
 
-const cardSelector = "#card-template";
+// const cardSelector = "#card-template";
 
 //const cardLikeButton = document.querySelector("#card-like-button");
 
@@ -98,33 +101,33 @@ const userInfo = new UserInfo({
 /* -------------------------------------------------------------------------- */
 /*                                  Functions                                 */
 /* -------------------------------------------------------------------------- */
-function closePopup(modal) {
-  modal.classList.remove("modal_opened");
-  // remove Escape key event listener
-  document.removeEventListener("keydown", handleEscape);
-}
+// function closePopup(modal) {
+//   modal.classList.remove("modal_opened");
+//   // remove Escape key event listener
+//   document.removeEventListener("keydown", handleEscape);
+// }
 
-function openPopup(modal) {
-  modal.classList.add("modal_opened");
-  document.addEventListener("keydown", handleEscape);
-  // add the  Escape key event listener
-}
-function handleEscape(event) {
-  if (event.key === "Escape") {
-    const currentModal = document.querySelector(".modal_opened");
-    closePopup(currentModal); // call the function to close the modal
-  }
-}
+// function openPopup(modal) {
+//   modal.classList.add("modal_opened");
+//   document.addEventListener("keydown", handleEscape);
+//   // add the  Escape key event listener
+// }
+// function handleEscape(event) {
+//   if (event.key === "Escape") {
+//     const currentModal = document.querySelector(".modal_opened");
+//     closePopup(currentModal); // call the function to close the modal
+//   }
+// }
 
-document.querySelectorAll(".modal").forEach((modal) => {
-  modal.addEventListener("mousedown", (evt) => {
-    console.log(evt.target);
-    // if evt.target's classList contains "modal"
-    if (evt.target.classList.contains("modal")) {
-      closePopup(modal);
-    }
-  });
-});
+// document.querySelectorAll(".modal").forEach((modal) => {
+//   modal.addEventListener("mousedown", (evt) => {
+//     console.log(evt.target);
+//     // if evt.target's classList contains "modal"
+//     if (evt.target.classList.contains("modal")) {
+//       closePopup(modal);
+//     }
+//   });
+// });
 
 function handleProfileEditSubmit(e) {
   e.preventDefault();
@@ -151,7 +154,7 @@ function handleAddCardSubmit(e) {
     name: addCardTitleInput.value,
     link: addCardUrlInput.value,
   });
-  closePopup(addCardModal);
+  closePopup(addCardModal); // TODO use method
   e.target.reset();
 
   addCardFormValidator.disableSubmitButton();
@@ -160,31 +163,27 @@ function handleAddCardSubmit(e) {
 /* -------------------------------------------------------------------------- */
 /*                               Event Listeners                              */
 /* -------------------------------------------------------------------------- */
+
 profileEditButton.addEventListener("click", () => {
   // Call userInfo.getUserInfo, assign return value to a variable
   const profileInfo = userInfo.getUserInfo(); // profileInfo.name = "Jacques Cousteau"
   profileTitleInput.value = profileInfo.userName; // use the object's properties instead of getting text content directly
   profileDescriptionInput.value = profileInfo.job;
   //profileEditModal.classList.add("modal_opened");
-  openPopup(profileEditModal);
+  EditProfilePopup.open();
 });
 
 // add event listener for the add card modal close button
-closeButtons.forEach((button) => {
-  // Find the closest popup only once
-  const popup = button.closest(".modal");
-  // Set the listener
-  button.addEventListener("click", () => closePopup(popup));
-});
+// TODO remove this loop
 
-profileEditForm.addEventListener("submit", handleProfileEditSubmit);
-
+// Opening listeners stay
 addNewCardButton.addEventListener("click", () => {
   //addCardModal.classList.add("modal_opened");
-  openPopup(addCardModal);
+  // TODO use popup class's open method
+  addCardPopup.open();
 });
 
-addCardForm.addEventListener("submit", handleAddCardSubmit);
+// TODO Remove all submit listeners (not the handlers)
 
 /* -------------------------------------------------------------------------- */
 /*                               Initialization                               */
@@ -220,6 +219,22 @@ const cardSection = new Section(
 );
 
 cardSection.renderItems();
+
+const addCardPopup = new PopupWithForm({
+  popupSelector: "#profile-add-modal",
+  handleFormSubmit: handleAddCardSubmit,
+  formSelector: "#modal-add-form",
+});
+const EditProfilePopup = new PopupWithForm({
+  popupSelector: "#profile-edit-modal",
+  handleFormSubmit: handleProfileEditSubmit,
+  formSelector: "#profile-form",
+});
+// TODO call setEventListeners for each
+addCardPopup.setEventListeners();
+EditProfilePopup.setEventListeners();
+
+// Do this for your EditProfilePopup
 
 // const chatSection = new Section(
 //   {
