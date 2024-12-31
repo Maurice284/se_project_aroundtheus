@@ -129,8 +129,7 @@ const userInfo = new UserInfo({
 //   });
 // });
 
-function handleProfileEditSubmit(e) {
-  e.preventDefault();
+function handleProfileEditSubmit(inputValues) {
   // Instead of these two lines of code below
   profileTitle.textContent = profileTitleInput.value;
   profileDescription.textContent = profileDescriptionInput.value;
@@ -140,7 +139,7 @@ function handleProfileEditSubmit(e) {
   userInfo.setUserInfo(userName, job);
   // ... call setUserInfo method, passing it argument
   // arg:  { name: ..., job: ... }
-  closePopup(profileEditModal);
+  editProfilePopup.close();
 }
 
 function handleCardImageClick(name, link) {
@@ -148,14 +147,15 @@ function handleCardImageClick(name, link) {
 }
 
 function handleAddCardSubmit(e) {
-  e.preventDefault();
+  console.log(e);
+  // e.preventDefault();
   //renderCard();
   renderCard({
     name: addCardTitleInput.value,
     link: addCardUrlInput.value,
   });
-  closePopup(addCardModal); // TODO use method
-  e.target.reset();
+  addCardPopup.close(); // TODO use method
+  // e.target.reset();
 
   addCardFormValidator.disableSubmitButton();
 }
@@ -170,7 +170,7 @@ profileEditButton.addEventListener("click", () => {
   profileTitleInput.value = profileInfo.userName; // use the object's properties instead of getting text content directly
   profileDescriptionInput.value = profileInfo.job;
   //profileEditModal.classList.add("modal_opened");
-  EditProfilePopup.open();
+  editProfilePopup.open();
 });
 
 // add event listener for the add card modal close button
@@ -225,16 +225,16 @@ const addCardPopup = new PopupWithForm({
   handleFormSubmit: handleAddCardSubmit,
   formSelector: "#modal-add-form",
 });
-const EditProfilePopup = new PopupWithForm({
+const editProfilePopup = new PopupWithForm({
   popupSelector: "#profile-edit-modal",
   handleFormSubmit: handleProfileEditSubmit,
   formSelector: "#profile-form",
 });
 // TODO call setEventListeners for each
 addCardPopup.setEventListeners();
-EditProfilePopup.setEventListeners();
+editProfilePopup.setEventListeners();
 
-// Do this for your EditProfilePopup
+// Do this for your editProfilePopup
 
 // const chatSection = new Section(
 //   {
