@@ -1,3 +1,5 @@
+import { initialCards } from "../utils/constants.js";
+import { config } from "../utils/constants.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import PopupWithImage from "../components/PopupWithImage.js";
@@ -5,47 +7,6 @@ import Section from "../components/Section.js";
 import "./index.css";
 import UserInfo from "../components/UserInfo.js";
 import PopupWithForm from "../components/PopupWithForm.js";
-
-const initialCards = [
-  {
-    name: "Yosemite Valley",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
-  },
-
-  {
-    name: "Lake Louise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg",
-  },
-
-  {
-    name: "Bald Mountains",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
-  },
-
-  {
-    name: "Latemar",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg",
-  },
-
-  {
-    name: "Vanoise National Park",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg",
-  },
-
-  {
-    name: "Lago di Braies",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
-  },
-];
-
-const config = {
-  formSelector: ".modal__form",
-  inputSelector: ".modal__input",
-  submitButtonSelector: ".modal__button",
-  inactiveButtonClass: "modal__button_disabled",
-  inputErrorClass: "modal__input_type_error",
-  errorClass: "modal__error_visible",
-};
 
 console.log(initialCards);
 const cardPreview = new PopupWithImage({
@@ -101,42 +62,15 @@ const userInfo = new UserInfo({
 /* -------------------------------------------------------------------------- */
 /*                                  Functions                                 */
 /* -------------------------------------------------------------------------- */
-// function closePopup(modal) {
-//   modal.classList.remove("modal_opened");
-//   // remove Escape key event listener
-//   document.removeEventListener("keydown", handleEscape);
-// }
 
-// function openPopup(modal) {
-//   modal.classList.add("modal_opened");
-//   document.addEventListener("keydown", handleEscape);
-//   // add the  Escape key event listener
-// }
-// function handleEscape(event) {
-//   if (event.key === "Escape") {
-//     const currentModal = document.querySelector(".modal_opened");
-//     closePopup(currentModal); // call the function to close the modal
-//   }
-// }
-
-// document.querySelectorAll(".modal").forEach((modal) => {
-//   modal.addEventListener("mousedown", (evt) => {
-//     console.log(evt.target);
-//     // if evt.target's classList contains "modal"
-//     if (evt.target.classList.contains("modal")) {
-//       closePopup(modal);
-//     }
-//   });
-// });
-
-function handleProfileEditSubmit(inputValues) {
+function handleProfileEditSubmit(profileInfo) {
   // Instead of these two lines of code below
-  profileTitle.textContent = profileTitleInput.value;
-  profileDescription.textContent = profileDescriptionInput.value;
-  const userName = profileTitleInput.value;
-  const job = profileDescriptionInput.value;
+  // profileTitle.textContent = profileTitleInput.value;
+  // profileDescription.textContent = profileDescriptionInput.value;
+  // const userName = profileInfo.userName;
+  // const job = profileInfo.job;
 
-  userInfo.setUserInfo(userName, job);
+  userInfo.setUserInfo(profileInfo.title, profileInfo.description);
   // ... call setUserInfo method, passing it argument
   // arg:  { name: ..., job: ... }
   editProfilePopup.close();
@@ -146,18 +80,19 @@ function handleCardImageClick(name, link) {
   cardPreview.open(name, link);
 }
 
-function handleAddCardSubmit(e) {
-  console.log(e);
+function handleAddCardSubmit(inputValues) {
   // e.preventDefault();
   //renderCard();
   renderCard({
-    name: addCardTitleInput.value,
-    link: addCardUrlInput.value,
+    name: inputValues.title,
+    link: inputValues.description,
   });
   addCardPopup.close(); // TODO use method
   // e.target.reset();
 
-  addCardFormValidator.disableSubmitButton();
+  // addCardFormValidator.disableSubmitButton();
+  // formValidators[addCardForm.getAttribute("name")].resetValidation();
+  formValidators[addCardForm.getAttribute("name")].disableSubmitButton();
 }
 
 /* -------------------------------------------------------------------------- */
@@ -190,8 +125,7 @@ addNewCardButton.addEventListener("click", () => {
 /* -------------------------------------------------------------------------- */
 
 function renderCard(cardData) {
-  const cardElement = createCard(cardData); // create
-  cardsList.prepend(cardElement); // add
+  cardSection.addItem(createCard(cardData));
 }
 
 function createCard(cardData) {
@@ -202,11 +136,29 @@ function createCard(cardData) {
 
 // initialCards.forEach((cardData) => renderCard(cardData));
 
-const editFormValidator = new FormValidator(config, profileEditForm);
-editFormValidator.enableValidation();
+// const editFormValidator = new FormValidator(config, profileEditForm);
+// editFormValidator.enableValidation();
 
-const addCardFormValidator = new FormValidator(config, addCardForm);
-addCardFormValidator.enableValidation();
+// const addCardFormValidator = new FormValidator(config, addCardForm);
+// addCardFormValidator.enableValidation();
+
+// define an object for storing validators
+const formValidators = {};
+
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(config, formElement);
+    // Here you get the name of the form (if you don’t have it then you need to add it into each form in `index.html` first)
+    const formName = formElement.getAttribute("name");
+
+    // Here you store the validator using the `name` of the form
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
+
+enableValidation(config);
 
 const cardSection = new Section(
   {
