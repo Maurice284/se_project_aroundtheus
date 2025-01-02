@@ -88,7 +88,7 @@ function handleAddCardSubmit(inputValues) {
     link: inputValues.description,
   });
   addCardPopup.close(); // TODO use method
-  // e.target.reset();
+  addCardForm.reset();
 
   // addCardFormValidator.disableSubmitButton();
   // formValidators[addCardForm.getAttribute("name")].resetValidation();
