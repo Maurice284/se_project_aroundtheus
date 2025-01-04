@@ -163,9 +163,7 @@ enableValidation(config);
 const cardSection = new Section(
   {
     items: initialCards,
-    renderer: (data) => {
-      cardSection.addItem(createCard(data));
-    },
+    renderer: renderCard,
   },
   ".cards__list"
 );
