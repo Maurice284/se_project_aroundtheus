@@ -7,6 +7,9 @@ import Section from "../components/Section.js";
 import "./index.css";
 import UserInfo from "../components/UserInfo.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import Api from "../utils/Api.js";
+const api = new Api();
+api.getCardList();
 
 console.log(initialCards);
 const cardPreview = new PopupWithImage({
