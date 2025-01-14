@@ -8,8 +8,49 @@ import "./index.css";
 import UserInfo from "../components/UserInfo.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import Api from "../utils/Api.js";
-const api = new Api();
-api.getCardList();
+// import { set } from "core-js/core/dict";
+import DeleteConfirmation from "../components/DeleteConfirmation.js";
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "9be0dbf9-27c2-4836-ae55-e53d3f0122ee",
+    "Content-Type": "application/json",
+  },
+});
+// get the cards off the server, and set them on the dom
+let cardSection;
+api
+  .getCardList()
+  .then((result) => {
+    console.log(result);
+    cardSection = new Section(
+      {
+        items: result,
+        renderer: renderCard,
+      },
+      ".cards__list"
+    );
+
+    cardSection.renderItems();
+    // place the cards on the dom
+    // set the 'items' in the section class to be the cards from the server
+    // call renderItems method
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+
+// get the userinfo off the server, and set it on the dom
+api
+  .getUserInfo()
+  .then((data) => {
+    console.log(data);
+    userInfo.setUserInfo(data.name, data.about);
+  })
+  .catch((err) => {
+    console.error(err);
+    alert("Could not get user info");
+  });
 
 console.log(initialCards);
 const cardPreview = new PopupWithImage({
@@ -62,6 +103,56 @@ const userInfo = new UserInfo({
   jobSelector: ".profile__description",
 });
 
+const deleteCardPopup = new DeleteConfirmation("#delete-conformation-modal");
+deleteCardPopup.setEventListeners();
+
+// Pass this to Card constructor
+function handleDeleteClick(card) {
+  deleteCardPopup.open();
+  // Call the popup's open method
+  // Call the setSubmitAction method and pass it an anonymous function
+  deleteCardPopup.setSubmitAction(() => {
+    console.log("card deletion handler called");
+    // call the api function (delete handler)
+    //    - pass it the id
+    //    - after successful response delete the card
+    let id = card.getId();
+    api.deleteCard(id).then(() => {
+      card.removeCard();
+      deleteCardPopup.close();
+      console.log("It ran");
+    });
+  });
+}
+
+function handleLikeClick(card) {
+  let id = card.getId();
+  let likes = !card.isLiked();
+  api
+    .changeLikeCardStatus(id, likes)
+    .then(() => {
+      console.log(likes);
+      card.updateLikesView();
+    })
+    .catch((err) =>
+      console.error(`An error occurred when changing like status: ${err}`)
+    );
+}
+
+//create a variable called deleteCardPopup
+// pass your contructor properties to it
+// create and pass handleDeleteCard function to your card class
+// when that function fires it should fire your deleteCardPopup.open() and you must pass the card data to that .ope(CardData)
+// const cardLikeButton = new Addlikes("#card-like-button");
+// const isLiked = response.isLiked;
+
+// if (isLiked) {
+//   cardLikeButton.cardsList.add();
+//   cardLikeButton.cardsList.remove();
+// } else {
+//   cardLikeButton.cardsList.remove();
+//   cardLikeButton.cardsList.add();
+// }
 /* -------------------------------------------------------------------------- */
 /*                                  Functions                                 */
 /* -------------------------------------------------------------------------- */
@@ -86,16 +177,25 @@ function handleCardImageClick(name, link) {
 function handleAddCardSubmit(inputValues) {
   // e.preventDefault();
   //renderCard();
-  renderCard({
-    name: inputValues.title,
-    link: inputValues.description,
-  });
-  addCardPopup.close(); // TODO use method
-  addCardForm.reset();
+  console.log("inputValues", inputValues);
+  api
+    .addNewCard({ name: inputValues.title, link: inputValues.description })
+    .then((cardData) => {
+      console.log("cardDATA", cardData);
+      renderCard(cardData);
+      addCardPopup.close(); // TODO use method
+      addCardForm.reset();
+      formValidators[addCardForm.getAttribute("name")].disableSubmitButton();
+    });
+
+  // renderCard({
+  //   name: inputValues.title,
+  //   link: inputValues.description,
+  // });
 
   // addCardFormValidator.disableSubmitButton();
   // formValidators[addCardForm.getAttribute("name")].resetValidation();
-  formValidators[addCardForm.getAttribute("name")].disableSubmitButton();
+  // formValidators[addCardForm.getAttribute("name")].disableSubmitButton();
 }
 
 /* -------------------------------------------------------------------------- */
@@ -132,7 +232,13 @@ function renderCard(cardData) {
 }
 
 function createCard(cardData) {
-  const card = new Card(cardData, "#card-template", handleCardImageClick);
+  const card = new Card(
+    cardData,
+    "#card-template",
+    handleCardImageClick,
+    handleDeleteClick,
+    handleLikeClick
+  );
   const cardElement = card.getCardElement();
   return cardElement;
 }
@@ -162,16 +268,6 @@ const enableValidation = (config) => {
 };
 
 enableValidation(config);
-
-const cardSection = new Section(
-  {
-    items: initialCards,
-    renderer: renderCard,
-  },
-  ".cards__list"
-);
-
-cardSection.renderItems();
 
 const addCardPopup = new PopupWithForm({
   popupSelector: "#profile-add-modal",

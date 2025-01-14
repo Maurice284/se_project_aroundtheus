@@ -23,13 +23,13 @@
             class="profile__image"
           />
           <div class="profile__info">
-            <h1 class="profile__title">Jacquea Cousteau</h1>
+            <h1 class="profile__title"></h1>
             <button
               type="button"
               class="profile__edit-button"
               id="profile-edit-button"
             ></button>
-            <p class="profile__description">Explorer</p>
+            <p class="profile__description"></p>
           </div>
           <button
             type="button"
@@ -124,6 +124,21 @@
           <button type="submit" class="modal__button inactive-button">
             Save
           </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal" id="delete-conformation-modal">
+      <div class="modal__container">
+        <button
+          type="button"
+          class="modal__close"
+          id="add-modal-close-button"
+        ></button>
+        <form class="modal__form" id="delete-conformation-form">
+          <!-- style the are you sure text and the yes button -->
+          <p class="modal__heading">Are you sure?</p>
+          <button type="submit" class="modal__button">Yes</button>
         </form>
       </div>
     </div>
