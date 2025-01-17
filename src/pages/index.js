@@ -171,13 +171,22 @@ function handleLikeClick(card) {
 
 function handleProfileEditSubmit(profileInfo, evt) {
   evt.submitter.textContent = "Saving...";
-
+  api
+    .setUserInfo({ name: profileInfo.title, about: profileInfo.description })
+    .then(() => {
+      userInfo.setUserInfo(profileInfo.title, profileInfo.description);
+      editProfilePopup.close();
+    })
+    .catch((error) => {
+      console.log("There was an error updating profile", error);
+    })
+    .finally(() => {
+      evt.submitter.textContent = "Save";
+    });
   // fetch to update the userinfo on the server
 
-  userInfo.setUserInfo(profileInfo.title, profileInfo.description);
   // ... call setUserInfo method, passing it argument
   // arg:  { name: ..., job: ... }
-  editProfilePopup.close();
 }
 
 function handleCardImageClick(name, link) {
@@ -219,7 +228,8 @@ function handleAddCardSubmit(inputValues, evt) {
       renderCard(cardData);
       addCardPopup.close(); // TODO use method
       addCardForm.reset();
-      formValidators[addCardForm.getAttribute("name")].disableSubmitButton();
+
+      formValidators[addCardForm.getAttribute("id")].disableSubmitButton();
     })
     .catch((err) => {
       console.log("There was a error when adding card", err);
@@ -234,8 +244,8 @@ function handleAddCardSubmit(inputValues, evt) {
   // });
 
   // addCardFormValidator.disableSubmitButton();
-  // formValidators[addCardForm.getAttribute("name")].resetValidation();
-  // formValidators[addCardForm.getAttribute("name")].disableSubmitButton();
+  // formValidators[addCardForm.getAttribute("id")].resetValidation();
+  // formValidators[addCardForm.getAttribute("id")].disableSubmitButton();
 }
 
 /* -------------------------------------------------------------------------- */
@@ -304,7 +314,7 @@ const enableValidation = (config) => {
   formList.forEach((formElement) => {
     const validator = new FormValidator(config, formElement);
     // Here you get the name of the form (if you don’t have it then you need to add it into each form in `index.html` first)
-    const formName = formElement.getAttribute("name");
+    const formName = formElement.getAttribute("id");
 
     // Here you store the validator using the `name` of the form
     formValidators[formName] = validator;

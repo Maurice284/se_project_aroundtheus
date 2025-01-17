@@ -14,7 +14,7 @@ export default class Section {
   renderItems() {
     // loop through all the items, and render each item on the page
     this._items.forEach((item) => {
-      console.log(item);
+      // console.log(item);
       this._renderer(item);
     });
   }
