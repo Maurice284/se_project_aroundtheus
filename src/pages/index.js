@@ -8,6 +8,7 @@ import "./index.css";
 import UserInfo from "../components/UserInfo.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import Api from "../utils/Api.js";
+import { renderLoading } from "../utils/utils.js";
 // import { set } from "core-js/core/dict";
 import DeleteConfirmation from "../components/DeleteConfirmation.js";
 const api = new Api({
@@ -45,7 +46,10 @@ api
   .getUserInfo()
   .then((data) => {
     console.log(data);
+    // set the name and description on the dom
     userInfo.setUserInfo(data.name, data.about);
+    // set the avatar on the dom. ie: call the setAvatar method in the UserInfo class
+    userInfo.setAvatar(data.avatar);
   })
   .catch((err) => {
     console.error(err);
@@ -62,6 +66,7 @@ cardPreview.setEventListeners();
 /*                                  Elements                                  */
 /* -------------------------------------------------------------------------- */
 const profileEditButton = document.querySelector("#profile-edit-button");
+const profileImageButton = document.querySelector(".profile__image-btn");
 const profileEditModal = document.querySelector("#profile-edit-modal");
 /*const profileModalCloseButton = document.querySelector(
   "#profile-modal-close-button"
@@ -101,6 +106,13 @@ const closeButtons = document.querySelectorAll(".modal__close");
 const userInfo = new UserInfo({
   nameSelector: ".profile__title",
   jobSelector: ".profile__description",
+  avatarSelector: ".profile__image",
+});
+
+const profileImagePopup = new PopupWithForm({
+  popupSelector: "#profile-image-modal",
+  handleFormSubmit: handleProfileImageSubmit,
+  formSelector: "#modal-image-form",
 });
 
 const deleteCardPopup = new DeleteConfirmation("#delete-conformation-modal");
@@ -157,12 +169,10 @@ function handleLikeClick(card) {
 /*                                  Functions                                 */
 /* -------------------------------------------------------------------------- */
 
-function handleProfileEditSubmit(profileInfo) {
-  // Instead of these two lines of code below
-  // profileTitle.textContent = profileTitleInput.value;
-  // profileDescription.textContent = profileDescriptionInput.value;
-  // const userName = profileInfo.userName;
-  // const job = profileInfo.job;
+function handleProfileEditSubmit(profileInfo, evt) {
+  evt.submitter.textContent = "Saving...";
+
+  // fetch to update the userinfo on the server
 
   userInfo.setUserInfo(profileInfo.title, profileInfo.description);
   // ... call setUserInfo method, passing it argument
@@ -174,10 +184,34 @@ function handleCardImageClick(name, link) {
   cardPreview.open(name, link);
 }
 
-function handleAddCardSubmit(inputValues) {
+function handleProfileImageSubmit(avatar, evt) {
+  console.log("this is avatar", avatar);
+  evt.submitter.textContent = "Saving...";
+  api
+    .updateProfilePic(avatar.link)
+    .then(() => {
+      console.log("This was successful");
+      userInfo.setAvatar(avatar.link);
+      profileImagePopup.close();
+    })
+    .catch((error) => {
+      console.log("There was a error when submitting avatar", error);
+    })
+    .finally(() => {
+      evt.submitter.textContent = "Save";
+    });
+  //Add error handling
+  //Add pencil
+  //add a finally block
+}
+
+function handleAddCardSubmit(inputValues, evt) {
+  evt.submitter.textContent = "Saving...";
+
   // e.preventDefault();
   //renderCard();
   console.log("inputValues", inputValues);
+
   api
     .addNewCard({ name: inputValues.title, link: inputValues.description })
     .then((cardData) => {
@@ -186,6 +220,12 @@ function handleAddCardSubmit(inputValues) {
       addCardPopup.close(); // TODO use method
       addCardForm.reset();
       formValidators[addCardForm.getAttribute("name")].disableSubmitButton();
+    })
+    .catch((err) => {
+      console.log("There was a error when adding card", err);
+    })
+    .finally(() => {
+      evt.submitter.textContent = "Save";
     });
 
   // renderCard({
@@ -221,6 +261,11 @@ addNewCardButton.addEventListener("click", () => {
   addCardPopup.open();
 });
 
+profileImageButton.addEventListener("click", () => {
+  profileImagePopup.open();
+});
+
+//renderLoading(popupConfig.cardFormPopupSelector, true);
 // TODO Remove all submit listeners (not the handlers)
 
 /* -------------------------------------------------------------------------- */
@@ -279,9 +324,11 @@ const editProfilePopup = new PopupWithForm({
   handleFormSubmit: handleProfileEditSubmit,
   formSelector: "#profile-form",
 });
+
 // TODO call setEventListeners for each
 addCardPopup.setEventListeners();
 editProfilePopup.setEventListeners();
+profileImagePopup.setEventListeners();
 
 // Do this for your editProfilePopup
 
