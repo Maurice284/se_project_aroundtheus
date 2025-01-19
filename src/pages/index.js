@@ -128,18 +128,23 @@ function handleDeleteClick(card) {
     // call the api function (delete handler)
     //    - pass it the id
     //    - after successful response delete the card
-    let id = card.getId();
-    api.deleteCard(id).then(() => {
-      card.removeCard();
-      deleteCardPopup.close();
-      console.log("It ran");
-    });
+    const id = card.getId();
+    api
+      .deleteCard(id)
+      .then(() => {
+        card.removeCard();
+        deleteCardPopup.close();
+        console.log("It ran");
+      })
+      .catch((err) =>
+        console.error(`An error has occured while deleting this card: ${err}`)
+      );
   });
 }
 
 function handleLikeClick(card) {
-  let id = card.getId();
-  let likes = !card.isLiked();
+  const id = card.getId();
+  const likes = !card.isLiked();
   api
     .changeLikeCardStatus(id, likes)
     .then(() => {
