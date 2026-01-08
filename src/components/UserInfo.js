@@ -1,9 +1,8 @@
 class UserInfo {
-  constructor({ nameSelector, jobSelector }) {
-    // Save the elements for later use
-    // nameSelector = ".profile__title"
+  constructor({ nameSelector, jobSelector, avatarSelector }) {
     this.nameElement = document.querySelector(nameSelector);
     this.jobElement = document.querySelector(jobSelector);
+    this.avatarElement = document.querySelector(avatarSelector);
   }
 
   // Method to get the current user information
@@ -20,6 +19,10 @@ class UserInfo {
     // Update the text content of the elements
     this.nameElement.textContent = userName;
     this.jobElement.textContent = job;
+  }
+
+  setAvatar(url) {
+    this.avatarElement.src = url;
   }
 }
 export default UserInfo;

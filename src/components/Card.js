@@ -1,22 +1,32 @@
 export default class Card {
-  constructor({ name, link }, cardSelector, handleCardImageClick) {
+  constructor(
+    { isLiked, name, link, _id },
+    cardSelector,
+    handleCardImageClick,
+    handleDeleteCard,
+    handleLikeClick
+  ) {
     this._name = name;
     this._link = link;
+    this._isLiked = isLiked;
+    this.id = _id;
     this._cardSelector = cardSelector;
     this._handleCardImageClick = handleCardImageClick;
+    this._handleDeleteCard = handleDeleteCard;
+    this._handleLikeClick = handleLikeClick;
   }
 
   _setEventListeners() {
     //".card__like-button"
     this._likeButton.addEventListener("click", () => {
-      this._handleLikeIcon();
+      this._handleLikeClick(this);
     });
 
     //".card__delete-button"
     this._cardElement
       .querySelector(".card__delete-button")
       .addEventListener("click", () => {
-        this._handleDeleteCard();
+        this._handleDeleteCard(this);
       });
 
     //click the card's image to open the preview-image modal
@@ -25,13 +35,22 @@ export default class Card {
     });
   }
 
-  _handleDeleteCard() {
+  removeCard() {
     this._cardElement.remove();
     this._cardElement = null;
   }
 
-  _handleLikeIcon() {
+  isLiked() {
+    return this._isLiked;
+  }
+
+  getId() {
+    return this.id;
+  }
+
+  updateLikesView() {
     this._likeButton.classList.toggle("card__like-button_liked");
+    this._isLiked = !this._isLiked;
   }
 
   getCardElement() {
@@ -55,7 +74,10 @@ export default class Card {
     this._cardImageEl.alt = this._name;
     this._cardTitleEl.textContent = this._name;
     this._likeButton = this._cardElement.querySelector(".card__like-button");
-
+    // check if the card is liked on the server. If it is, we make it look liked on the dom.
+    if (this._isLiked) {
+      this._likeButton.classList.add("card__like-button_liked");
+    }
     this._setEventListeners();
     return this._cardElement;
     //return the card
